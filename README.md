@@ -79,5 +79,45 @@ O código foi desenvolvido em MATLAB e segue a seguinte lógica estruturada:
 4. **Cálculo da resposta em frequência:**
    - Para cada filtro (LPF e HPF), calcula a magnitude (em dB) da função de transferência usando os valores ideais e, em seguida, usando os valores comerciais selecionados.
    - A frequência é varrida em escala logarítmica de 10 Hz a 100 kHz.
-5. **Geração dos gráficos:** Plota os gráficos de Bode (magnitude) sobrepostos (Ideal vs. Real) para o LPF e HPF, salvando a figura em `/bode_ideal_vs_real.png`.
+5. **Geração dos gráficos:** Plota os gráficos de Bode (magnitude) sobrepostos (Ideal vs. Real) para o LPF e HPF, salvando a figura em `bode_ideal_vs_real.png`.
 6. **Análise crítica automática:** O programa encontra a frequência de corte real (ponto de -3 dB) para ambos os filtros com os componentes comerciais e calcula os erros percentuais, exibindo-os no console.
+
+---
+## Análise dos Resultados
+
+### Valores Calculados (Ideais vs. Comerciais)
+
+A execução do programa resultou nos seguintes valores:
+
+| Filtro | Componente | Valor Ideal | Valor Comercial | Variação |
+|--------|------------|-------------|-----------------|----------|
+| **LPF** (Woofer) | Indutor (\(L\)) | 0,900 mH | **0,82 mH** | -8,9% |
+| **LPF** (Woofer) | Capacitor (\(C\)) | 7,03 µF | **6,8 µF** | -3,3% |
+| **HPF** (Tweeter) | Indutor (\(L\)) | 0,450 mH | **0,47 mH** | +4,4% |
+| **HPF** (Tweeter) | Capacitor (\(C\)) | 14,06 µF | **15 µF** | +6,7% |
+
+### Gráfico de Bode Comparativo
+
+A figura abaixo mostra a resposta em magnitude (em dB) dos filtros LPF e HPF. A linha contínua representa a resposta com os componentes ideais (Butterworth), enquanto a linha tracejada representa a resposta utilizando os componentes comerciais selecionados. A linha vertical pontilhada indica a frequência de corte projetada (2 kHz).
+
+![Gráfico de Bode Comparativo](bode_ideal_vs_real.png)
+
+### Análise Crítica
+
+#### Quantificação das Diferenças
+
+- **Deslocamento da frequência de corte:**
+  - **LPF Real:** A frequência de corte (ponto de -3 dB) deslocou-se para aproximadamente **2.130 Hz**, resultando em um erro de **+6,5%** em relação ao ideal.
+  - **HPF Real:** A frequência de corte deslocou-se para aproximadamente **1.896 Hz**, resultando em um erro de **-5,2%** em relação ao ideal.
+
+- **Impacto na resposta em frequência:** Embora os desvios nos componentes individuais sejam relativamente pequenos (menores que 9%), o deslocamento das frequências de corte causa uma **assimetria na região de transição (crossover)**. Idealmente, ambos os filtros deveriam se cruzar em -3 dB exatamente em 2 kHz. Com os componentes reais, há uma pequena sobreposição (ambos reproduzindo a mesma faixa) ou uma lacuna (nenhum reproduzindo), dependendo da direção do erro.
+
+#### Impacto Prático no Sistema de Áudio
+
+1. **Fidelidade e Coerência:**
+   - A mudança na frequência de corte pode fazer com que o woofer reproduza levemente os médios-agudos (no caso do LPF) ou que o tweeter perca parte dos médios-graves.
+   - Isso pode resultar em uma ligeira "coloração" do som, onde instrumentos com harmônicos na região de 2 kHz (como voz feminina, violinos e pratos de bateria) podem ter seu timbre alterado.
+
+2. **Audibilidade:**
+   - Desvios de até 7% na frequência de corte são considerados **perceptíveis** por ouvintes treinados em sistemas de alta fidelidade, especialmente em testes com varredura senoidal. Para o ouvinte comum em um ambiente doméstico, essa diferença pode ser sutil, mas pode afetar a percepção da "imagem sonora" (*soundstage*).
+   - O fator mais crítico é a **diferença de fase** introduzida entre os dois filtros, que pode causar cancelamentos na região do crossover, prejudicando a resposta de transientes.

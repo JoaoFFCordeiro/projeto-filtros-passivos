@@ -168,6 +168,6 @@ fprintf('HPF: L = %.3f mH (ideal: %.3f) – variação %.1f%%\n', ...
         L_HPF_real*1e3, L_HPF_ideal*1e3, (L_HPF_real/L_HPF_ideal - 1)*100);  
 fprintf('HPF: C = %.3f µF (ideal: %.3f) – variação %.1f%%\n', ...
         C_HPF_real*1e6, C_HPF_ideal*1e6, (C_HPF_real/C_HPF_ideal - 1)*100);  
-![Gráfico de Bode](bode_ideal_vs_real.png)
+
 
 fprintf('\n>>> Fim da execução.\n');  
